@@ -4,6 +4,9 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import express, { Express } from "express";
 import authRoutes from "./routes/auth_route";
+import postRoutes from "./routes/posts_route";
+import tagRoutes from "./routes/tags_route";
+
 import mongoose, { ConnectOptions } from "mongoose";
 
 const app = express();
@@ -16,6 +19,8 @@ db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to database"));
 
 app.use("/auth", authRoutes);
+app.use("/post", postRoutes);
+app.use("/tags", tagRoutes);
 
 const initApp = () => {
   return new Promise<Express>((resolve, reject) => {
