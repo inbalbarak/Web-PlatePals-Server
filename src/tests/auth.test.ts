@@ -169,29 +169,6 @@ describe("Auth Tests", () => {
     expect(response3.statusCode).not.toBe(200);
   });
 
-  test("Test logout", async () => {
-    const response = await request(app)
-      .post(baseUrl + "/login")
-      .send(testUser);
-    expect(response.statusCode).toBe(200);
-    testUser.accessToken = response.body.accessToken;
-    testUser.refreshToken = response.body.refreshToken;
-
-    const response2 = await request(app)
-      .post(baseUrl + "/logout")
-      .send({
-        refreshToken: testUser.refreshToken,
-      });
-    expect(response2.statusCode).toBe(200);
-
-    const response3 = await request(app)
-      .post(baseUrl + "/refresh")
-      .send({
-        refreshToken: testUser.refreshToken,
-      });
-    expect(response3.statusCode).not.toBe(200);
-  });
-
   jest.setTimeout(10000);
   test("Test timeout token ", async () => {
     const response = await request(app)

@@ -156,16 +156,6 @@ const verifyRefreshToken = (refreshToken: string | undefined) => {
   });
 };
 
-const logout = async (req: Request, res: Response) => {
-  try {
-    const user = await verifyRefreshToken(req.body.refreshToken);
-    await user.save();
-    res.status(200).send("success");
-  } catch (_err) {
-    res.status(400).send("fail");
-  }
-};
-
 const refresh = async (req: Request, res: Response) => {
   try {
     const user = await verifyRefreshToken(req.body.refreshToken);
@@ -265,6 +255,5 @@ export default {
   register,
   login,
   refresh,
-  logout,
   googleLogin,
 };
