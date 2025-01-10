@@ -21,27 +21,6 @@ import authController from "../controllers/auth_controller";
 
 /**
  * @swagger
- * components:
- *   schemas:
- *     User:
- *       type: object
- *       required:
- *         - email
- *         - password
- *       properties:
- *         email:
- *           type: string
- *           description: The user email
- *         password:
- *           type: string
- *           description: The user password
- *       example:
- *         email: 'bob@gmail.com'
- *         password: '123456'
- */
-
-/**
- * @swagger
  * /auth/register:
  *   post:
  *     summary: registers a new user
