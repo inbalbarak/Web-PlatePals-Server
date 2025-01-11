@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import authController from "../controllers/auth_controller";
+import authController, { authMiddleware } from "../controllers/auth_controller";
 
 /**
  * @swagger
@@ -119,5 +119,33 @@ router.post("/google-login", authController.googleLogin);
  *         description: Server error
  */
 router.post("/refresh", authController.refresh);
+
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     summary: User logout
+ *     description: Logout user and invalidate the refresh token
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *                 example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *     responses:
+ *       200:
+ *         description: Successful logout
+ *       400:
+ *         description: Invalid refresh token
+ *       500:
+ *         description: Server error
+ */
+router.post("/logout", authMiddleware, authController.logout);
 
 export default router;
