@@ -60,7 +60,7 @@ const generateToken = (userId: string): tTokens | null => {
 
 const login = async (req: Request, res: Response) => {
   try {
-    const user = await UsersModel.findOne({ email: req.body.email });
+    const user = await UsersModel.findOne({ username: req.body.username });
     if (!user) {
       res.status(400).send("wrong username or password");
       return;
