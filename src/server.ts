@@ -1,16 +1,21 @@
 import dotenv from "dotenv";
 dotenv.config();
-import mongoose, { ConnectOptions } from "mongoose";
+import cors from "cors";
 import bodyParser from "body-parser";
 import express, { Express } from "express";
+import authRoutes from "./routes/auth_route";
+import mongoose, { ConnectOptions } from "mongoose";
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to database"));
+
+app.use("/auth", authRoutes);
 
 const initApp = () => {
   return new Promise<Express>((resolve, reject) => {
