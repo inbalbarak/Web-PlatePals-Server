@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import authController from "../controllers/auth_controller";
+import authController, { authMiddleware } from "../controllers/auth_controller";
 
 /**
  * @swagger
@@ -17,27 +17,6 @@ import authController from "../controllers/auth_controller";
  *       type: http
  *       scheme: bearer
  *       bearerFormat: JWT
- */
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     User:
- *       type: object
- *       required:
- *         - email
- *         - password
- *       properties:
- *         email:
- *           type: string
- *           description: The user email
- *         password:
- *           type: string
- *           description: The user password
- *       example:
- *         email: 'bob@gmail.com'
- *         password: '123456'
  */
 
 /**
@@ -167,6 +146,6 @@ router.post("/refresh", authController.refresh);
  *       500:
  *         description: Server error
  */
-router.post("/logout", authController.logout);
+router.post("/logout", authMiddleware, authController.logout);
 
 export default router;

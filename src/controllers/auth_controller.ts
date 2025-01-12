@@ -4,6 +4,7 @@ import { Document } from "mongoose";
 import { OAuth2Client } from "google-auth-library";
 import { NextFunction, Request, Response } from "express";
 import UsersModel, { UserAttributes } from "../models/users_model";
+import UserModel from "../models/users_model";
 
 const register = async (req: Request, res: Response) => {
   try {
@@ -156,16 +157,6 @@ const verifyRefreshToken = (refreshToken: string | undefined) => {
   });
 };
 
-const logout = async (req: Request, res: Response) => {
-  try {
-    const user = await verifyRefreshToken(req.body.refreshToken);
-    await user.save();
-    res.status(200).send("success");
-  } catch (_err) {
-    res.status(400).send("fail");
-  }
-};
-
 const refresh = async (req: Request, res: Response) => {
   try {
     const user = await verifyRefreshToken(req.body.refreshToken);
@@ -261,10 +252,44 @@ export const authMiddleware = (
   });
 };
 
+const logout = (req: Request, res: Response) => {
+  const authorization = req.header("authorization");
+  const token = authorization && authorization.split(" ")[1];
+
+  if (token === null) {
+    res.status(401).send();
+    return;
+  }
+  jwt.verify(
+    token,
+    process.env.TOKEN_SECRET,
+    async (err, userInfo: UserAttributes) => {
+      if (err) {
+        return res.status(403).send(err.message);
+      }
+      const userId = userInfo._id;
+
+      try {
+        const user = await UserModel.findById(userId);
+        if (userId == null) {
+          return res.status(403).send("invalid request");
+        }
+
+        user.refreshToken = [];
+        await user.save();
+
+        res.status(200).send();
+      } catch (err) {
+        res.status(403).send(err.message);
+      }
+    }
+  );
+};
+
 export default {
   register,
   login,
   refresh,
-  logout,
   googleLogin,
+  logout,
 };
