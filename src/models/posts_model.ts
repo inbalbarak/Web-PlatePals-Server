@@ -4,7 +4,8 @@ export interface PostAttributes {
   title: string;
   author: mongoose.Types.ObjectId;
   tags?: mongoose.Types.ObjectId[];
-  // rating?: number;
+  averageRating: number;
+  ratingCount: number;
   imageUrl?: string;
   ingredients: string;
   instructions: string;
@@ -33,6 +34,14 @@ const postSchema = new mongoose.Schema<PostAttributes>(
     instructions: {
       type: String,
       required: true,
+    },
+    averageRating: {
+      type: Number,
+      default: 0,
+    },
+    ratingCount: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

@@ -12,9 +12,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg2YmU1Z
 Content-Type: application/json
 
 {
-    "title": "Pad Kapaow",
+    "title": "Protein Shake",
     "author": "6786be5e23fb55edbf3707f2",
-    "tags": ["6783ef381c4c2468f4c46cae"],
-    "ingredients": "bla bla bla",
-    "instructions": "do do do"
+    "tags": ["6783ef381c4c2468f4c46cac", "6783ef381c4c2468f4c46caf"],
+    "ingredients": "egg",
+    "instructions": "fry",
+    "averageRating": 4.6,
+    "ratingCount": 600
 }
