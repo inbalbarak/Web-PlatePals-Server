@@ -1,0 +1,20 @@
+
+############## Posts #################
+
+
+GET http://localhost:3000/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg2YmU1ZTIzZmI1NWVkYmYzNzA3ZjIiLCJyYW5kb20iOiIwLjUzODc1NjA5MDgyOTczNiIsImlhdCI6MTczNjg4MzgxNCwiZXhwIjoxNzM3NDg4NjE0fQ.yVxtmzWDOkiUY7eQdQIBb_CpvGV4EDjr0A9h67wKmMw
+
+###
+
+POST http://localhost:3000/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Nzg2YmU1ZTIzZmI1NWVkYmYzNzA3ZjIiLCJyYW5kb20iOiIwLjUzODc1NjA5MDgyOTczNiIsImlhdCI6MTczNjg4MzgxNCwiZXhwIjoxNzM3NDg4NjE0fQ.yVxtmzWDOkiUY7eQdQIBb_CpvGV4EDjr0A9h67wKmMw
+Content-Type: application/json
+
+{
+    "title": "Pad Kapaow",
+    "author": "6786be5e23fb55edbf3707f2",
+    "tags": ["6783ef381c4c2468f4c46cae"],
+    "ingredients": "bla bla bla",
+    "instructions": "do do do"
+}

@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 export interface PostAttributes {
   _id?: string;
   title: string;
-  author: string;
-  tags?: string[];
-  rating?: number;
+  author: mongoose.Types.ObjectId;
+  tags?: mongoose.Types.ObjectId[];
+  // rating?: number;
+  imageUrl?: string;
   ingredients: string;
   instructions: string;
 }
@@ -15,15 +16,15 @@ const postSchema = new mongoose.Schema<PostAttributes>(
       type: String,
       required: true,
     },
-    author: {
+    author: { type: Schema.Types.ObjectId, ref: "Users", required: true },
+    tags: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Tags",
+      },
+    ],
+    imageUrl: {
       type: String,
-      required: true,
-    },
-    tags: {
-      type: [String],
-    },
-    rating: {
-      type: Number,
     },
     ingredients: {
       type: String,
