@@ -19,13 +19,13 @@ db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to database"));
 
 app.use("/auth", authRoutes);
-app.use("/post", postRoutes);
+app.use("/posts", postRoutes);
 app.use("/tags", tagRoutes);
 
 const initApp = () => {
   return new Promise<Express>((resolve, reject) => {
     if (!process.env.DATABASE_URL) {
-      reject("DB_CONNECT is not defined in .env file");
+      reject("DATABASE_URL is not defined in .env file");
     } else {
       mongoose
         .connect(process.env.DATABASE_URL, {
