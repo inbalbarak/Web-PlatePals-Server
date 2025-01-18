@@ -21,7 +21,7 @@ beforeAll(async () => {
   await userModel.deleteMany();
   await request(app).post("/auth/register").send(testUser);
   const res = await request(app).post("/auth/login").send(testUser);
-  testUser.token = res.body.token;
+  testUser.token = res.body.refreshToken;
   testUser._id = res.body._id;
   expect(testUser.token).toBeDefined();
 });
@@ -35,7 +35,9 @@ afterAll((done) => {
 let postId = "";
 describe("Posts Tests", () => {
   test("Posts test get all", async () => {
-    const response = await request(app).get("/posts");
+    const response = await request(app)
+      .get("/posts")
+      .set({ authorization: "JWT " + testUser.token });
     expect(response.statusCode).toBe(200);
     expect(response.body.length).toBe(0);
   });
@@ -45,25 +47,27 @@ describe("Posts Tests", () => {
       .post("/posts")
       .set({ authorization: "JWT " + testUser.token })
       .send({
-        ingredients: "test",
-        instructions: "test",
+        ingredients: "Test Ingredients",
+        instructions: "Test Instructions",
         title: "Test Post",
         author: testUser.username,
       });
     expect(response.statusCode).toBe(201);
     expect(response.body.title).toBe("Test Post");
-    expect(response.body.content).toBe("Test Content");
+    expect(response.body.instructions).toBe("Test Instructions");
+    expect(response.body.ingredients).toBe("Test Ingredients");
     postId = response.body._id;
   });
 
   test("Test get post by author", async () => {
-    const response = await request(app).get(
-      "/posts?author=" + testUser.username
-    );
+    const response = await request(app)
+      .get("/posts?author=" + testUser.username)
+      .set({ authorization: "JWT " + testUser.token });
     expect(response.statusCode).toBe(200);
     expect(response.body.length).toBe(1);
     expect(response.body[0].title).toBe("Test Post");
-    expect(response.body[0].content).toBe("Test Content");
+    expect(response.body[0].instructions).toBe("Test Instructions");
+    expect(response.body[0].ingredients).toBe("Test Ingredients");
   });
 
   test("Test Create Post 2", async () => {
@@ -80,7 +84,10 @@ describe("Posts Tests", () => {
   });
 
   test("Posts test get all 2", async () => {
-    const response = await request(app).get("/posts");
+    const response = await request(app)
+      .get("/posts")
+      .set({ authorization: "JWT " + testUser.token });
+
     expect(response.statusCode).toBe(200);
     expect(response.body.length).toBe(2);
   });
