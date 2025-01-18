@@ -3,7 +3,7 @@ export interface PostAttributes {
   _id?: string;
   title: string;
   author: string;
-  tags?: mongoose.Types.ObjectId[];
+  tags: mongoose.Types.ObjectId[];
   averageRating: number;
   ratingCount: number;
   imageUrl?: string;
@@ -22,6 +22,7 @@ const postSchema = new mongoose.Schema<PostAttributes>(
       {
         type: Schema.Types.ObjectId,
         ref: "Tags",
+        default: [],
       },
     ],
     imageUrl: {
