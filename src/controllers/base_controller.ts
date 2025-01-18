@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 import { Request, Response } from "express";
 
-class BaseController<T> {
+export class BaseController<T> {
   model: Model<T>;
   constructor(model: Model<T>) {
     this.model = model;
@@ -56,5 +56,4 @@ class BaseController<T> {
   };
 }
 
-const createController = <T>(model: Model<T>) => new BaseController<T>(model);
-export default createController;
+export default BaseController;

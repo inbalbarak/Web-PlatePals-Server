@@ -1,6 +1,6 @@
-import createController from "./base_controller";
+import { BaseController } from "./base_controller";
 import UserModel, { UserAttributes } from "../models/users_model";
 
-const usersController = createController<UserAttributes>(UserModel);
+const UsersController = new BaseController<UserAttributes>(UserModel);
 
-export default usersController;
+export default UsersController;
