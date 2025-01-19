@@ -204,7 +204,6 @@ export const googleLogin = async (req: Request, res: Response) => {
     });
 
     const payload = ticket.getPayload();
-    console.log(payload);
     req.body.email = payload.email;
 
     const email = payload?.email;
@@ -219,7 +218,11 @@ export const googleLogin = async (req: Request, res: Response) => {
     }
 
     const tokens = generateToken(user._id);
-    res.status(200).send(tokens);
+    res.status(200).send({
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+      _id: user._id,
+    });
   } catch (_err) {
     res.status(400).send("error in google login");
   }

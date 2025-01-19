@@ -12,7 +12,7 @@ import { authMiddleware } from "../controllers/auth_controller";
 
 /**
  * @swagger
- * /post/:
+ * /posts/:
  *   post:
  *     summary: create a new post
  *     tags: [Posts]
@@ -62,7 +62,7 @@ router.post("/", authMiddleware, postsController.create.bind(postsController));
 
 /**
  * @swagger
- * /post/:id:
+ * /posts/:id:
  *   delete:
  *     summary: delete post by id
  *     tags: [Comments]

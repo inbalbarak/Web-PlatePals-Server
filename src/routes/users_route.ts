@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import { authMiddleware } from "../controllers/auth_controller";
-import commentsController from "../controllers/comments_controller";
+import usersController from "../controllers/users_controller";
 
 /**
  * @swagger
@@ -24,9 +24,9 @@ import commentsController from "../controllers/comments_controller";
  */
 
 router.get(
-  "/post/:id",
+  "/:id",
   authMiddleware,
-  commentsController.getByPostId.bind(commentsController)
+  usersController.getById.bind(usersController)
 );
 
 export default router;

@@ -7,17 +7,20 @@ class PostsController extends BaseController<PostAttributes> {
     super(PostModel);
   }
 
-  getAll = async (req: Request, res: Response) => {
+  async getAll(req: Request, res: Response) {
     try {
       const posts = await PostModel.find()
-        .populate([{ path: "tags", select: "name" }])
+        .populate([
+          { path: "tags", select: "name" },
+          { path: "author", select: "username" },
+        ])
         .lean();
 
       res.status(200).send(posts);
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
-  };
+  }
 }
 
 export default new PostsController();

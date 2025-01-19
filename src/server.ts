@@ -5,6 +5,8 @@ import bodyParser from "body-parser";
 import express, { Express } from "express";
 import authRoutes from "./routes/auth_route";
 import postRoutes from "./routes/posts_route";
+import userRoutes from "./routes/users_route";
+import commentRoutes from "./routes/comments_route";
 import tagRoutes from "./routes/tags_route";
 
 import mongoose, { ConnectOptions } from "mongoose";
@@ -19,6 +21,8 @@ db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to database"));
 
 app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
+app.use("/comments", commentRoutes);
 app.use("/posts", postRoutes);
 app.use("/tags", tagRoutes);
 
