@@ -29,4 +29,61 @@ router.get(
   commentsController.getByPostId.bind(commentsController)
 );
 
+/**
+ * @swagger
+ * /comments/:
+ *   post:
+ *     summary: create a new comment
+ *     tags: [Comments]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Comments'
+ *     responses:
+ *       200:
+ *         description: The new comment
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Comments'
+ *       400:
+ *         description: Invalid request body
+ *       500:
+ *         description: Server error
+ *   put:
+ *     summary: update a comment
+ *     tags: [Comments]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Comments'
+ *     responses:
+ *       200:
+ *         description: The updated comment
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Comments'
+ *       400:
+ *         description: Invalid request body
+ *       500:
+ *         description: Server error
+ */
+
+router.put(
+  "/",
+  authMiddleware,
+  commentsController.update.bind(commentsController)
+);
+
+router.post(
+  "/",
+  authMiddleware,
+  commentsController.create.bind(commentsController)
+);
+
 export default router;

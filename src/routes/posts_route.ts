@@ -28,7 +28,7 @@ import { authMiddleware } from "../controllers/auth_controller";
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Post'
+ *               $ref: '#/components/schemas/Posts'
  *       400:
  *         description: Invalid request body
  *       500:
@@ -48,7 +48,7 @@ import { authMiddleware } from "../controllers/auth_controller";
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Post'
+ *               $ref: '#/components/schemas/Posts'
  *       400:
  *         description: Invalid request body
  *       500:
@@ -65,7 +65,7 @@ router.post("/", authMiddleware, postsController.create.bind(postsController));
  * /posts/:id:
  *   delete:
  *     summary: delete post by id
- *     tags: [Comments]
+ *     tags: [Posts]
  *     parameters:
  *          - in: path
  *            name: id
