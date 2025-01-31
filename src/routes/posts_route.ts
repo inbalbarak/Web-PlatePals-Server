@@ -54,6 +54,8 @@ import { authMiddleware } from "../controllers/auth_controller";
  *       500:
  *         description: Server error
  */
+router.get("/", authMiddleware, postsController.getAll.bind(postsController));
+
 router.put("/", authMiddleware, postsController.update.bind(postsController));
 
 router.post("/", authMiddleware, postsController.create.bind(postsController));
