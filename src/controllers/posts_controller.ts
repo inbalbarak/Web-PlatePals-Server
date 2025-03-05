@@ -12,7 +12,6 @@ const getByAuthor = async (req: Request, res: Response) => {
   }
 };
 
-export { postsController, getByAuthor };
 postsController.getAll = async (req, res) => {
   try {
     const posts = await PostModel.find()
@@ -36,4 +35,4 @@ postsController.getAll = async (req, res) => {
   }
 };
 
-export default postsController;
+export { postsController, getByAuthor };
