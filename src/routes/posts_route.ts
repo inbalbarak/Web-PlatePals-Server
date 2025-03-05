@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
-import postsController from "../controllers/posts_controller";
 import { authMiddleware } from "../controllers/auth_controller";
+import { getByAuthor, postsController } from "../controllers/posts_controller";
 
 /**
  * @swagger
@@ -62,7 +62,7 @@ router.post("/", authMiddleware, postsController.create.bind(postsController));
 
 /**
  * @swagger
- * /post/:id:
+ * /post/:id
  *   delete:
  *     summary: delete post by id
  *     tags: [Comments]
@@ -78,11 +78,33 @@ router.post("/", authMiddleware, postsController.create.bind(postsController));
  *         description: Invalid request
  *       500:
  *         description: Server error
+ *
+ * /posts/author/:id:
+ *      get:
+ *          summary: get posts by author
+ *          tags: [Posts]
+ *          parameters:
+ *              - in: path
+ *                name: id
+ *                schema:
+ *                  type: string
+ *          security:
+ *              - bearerAuth: []
+ *          responses:
+ *              200:
+ *                  description: The posts written by the author
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              $ref: '#/components/schemas/Posts'
  */
+
 router.delete(
   "/:id",
   authMiddleware,
   postsController.delete.bind(postsController)
 );
+
+router.get("/user/", authMiddleware, getByAuthor);
 
 export default router;
