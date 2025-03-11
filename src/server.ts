@@ -8,6 +8,7 @@ import postRoutes from "./routes/posts_route";
 import userRoutes from "./routes/users_route";
 import commentRoutes from "./routes/comments_route";
 import tagRoutes from "./routes/tags_route";
+import usersRoute from "./routes/user_route";
 
 import mongoose, { ConnectOptions } from "mongoose";
 
@@ -25,6 +26,7 @@ app.use("/users", userRoutes);
 app.use("/comments", commentRoutes);
 app.use("/posts", postRoutes);
 app.use("/tags", tagRoutes);
+app.use("/users", usersRoute);
 
 const initApp = () => {
   return new Promise<Express>((resolve, reject) => {

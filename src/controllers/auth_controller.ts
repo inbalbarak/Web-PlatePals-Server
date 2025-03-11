@@ -29,7 +29,9 @@ type tTokens = {
   refreshToken: string;
 };
 
-const generateToken = (userId: string): tTokens | null => {
+const generateToken = (
+  userId: string
+): (tTokens & { userId: string }) | null => {
   if (!process.env.TOKEN_SECRET) {
     return null;
   }
@@ -55,6 +57,7 @@ const generateToken = (userId: string): tTokens | null => {
   return {
     accessToken: accessToken,
     refreshToken: refreshToken,
+    userId,
   };
 };
 
@@ -91,7 +94,7 @@ const login = async (req: Request, res: Response) => {
     user.refreshToken.push(tokens.refreshToken);
     await user.save();
     res.status(200).send({
-      _id: user._id,
+      userId: user._id,
       accessToken: tokens.accessToken,
       refreshToken: tokens.refreshToken,
     });
