@@ -6,6 +6,7 @@ import express, { Express } from "express";
 import authRoutes from "./routes/auth_route";
 import postRoutes from "./routes/posts_route";
 import tagRoutes from "./routes/tags_route";
+import chatbotRoutes from "./routes/chatbot_route";
 
 import mongoose, { ConnectOptions } from "mongoose";
 
@@ -21,6 +22,7 @@ db.once("open", () => console.log("Connected to database"));
 app.use("/auth", authRoutes);
 app.use("/posts", postRoutes);
 app.use("/tags", tagRoutes);
+app.use("/chatbot", chatbotRoutes);
 
 const initApp = () => {
   return new Promise<Express>((resolve, reject) => {
