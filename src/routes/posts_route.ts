@@ -1,8 +1,7 @@
 import express from "express";
 const router = express.Router();
-import postsController from "../controllers/posts_controller";
 import { authMiddleware } from "../controllers/auth_controller";
-
+import postsController from "../controllers/posts_controller";
 /**
  * @swagger
  * tags:
@@ -12,7 +11,7 @@ import { authMiddleware } from "../controllers/auth_controller";
 
 /**
  * @swagger
- * /post/:
+ * /post/
  *   post:
  *     summary: create a new post
  *     tags: [Posts]
@@ -62,7 +61,7 @@ router.post("/", authMiddleware, postsController.create.bind(postsController));
 
 /**
  * @swagger
- * /post/:id:
+ * /post/:id
  *   delete:
  *     summary: delete post by id
  *     tags: [Comments]
@@ -78,6 +77,7 @@ router.post("/", authMiddleware, postsController.create.bind(postsController));
  *         description: Invalid request
  *       500:
  *         description: Server error
+ *
  */
 router.delete(
   "/:id",
