@@ -12,7 +12,7 @@ import { getByAuthor, postsController } from "../controllers/posts_controller";
 
 /**
  * @swagger
- * /post/:
+ * /post/
  *   post:
  *     summary: create a new post
  *     tags: [Posts]
@@ -105,6 +105,6 @@ router.delete(
   postsController.delete.bind(postsController)
 );
 
-router.get("/user/", authMiddleware, getByAuthor);
+router.get("/user/", authMiddleware, getByAuthor.bind(postsController));
 
 export default router;
