@@ -27,7 +27,7 @@ app.use("/users", usersRoute);
 const initApp = () => {
   return new Promise<Express>((resolve, reject) => {
     if (!process.env.DATABASE_URL) {
-      reject("DB_CONNECT is not defined in .env file");
+      reject("DATABASE_URL is not defined in .env file");
     } else {
       mongoose
         .connect(process.env.DATABASE_URL, {

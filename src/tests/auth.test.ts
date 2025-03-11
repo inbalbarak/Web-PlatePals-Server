@@ -125,9 +125,10 @@ describe("Auth Tests", () => {
       .post("/posts")
       .set({ authorization: "JWT " + testUser.accessToken })
       .send({
+        ingredients: "test",
+        instructions: "test",
         title: "Test Post",
-        content: "Test Content",
-        owner: "test",
+        author: testUser.username,
       });
     expect(response2.statusCode).toBe(201);
   });
@@ -184,9 +185,10 @@ describe("Auth Tests", () => {
       .post("/posts")
       .set({ authorization: "JWT " + testUser.accessToken })
       .send({
+        ingredients: "test",
+        instructions: "test",
         title: "Test Post",
-        content: "Test Content",
-        owner: "test",
+        author: testUser.username,
       });
     expect(response2.statusCode).not.toBe(201);
 
@@ -202,9 +204,10 @@ describe("Auth Tests", () => {
       .post("/posts")
       .set({ authorization: "JWT " + testUser.accessToken })
       .send({
+        ingredients: "test",
+        instructions: "test",
         title: "Test Post",
-        content: "Test Content",
-        owner: "test",
+        author: testUser.username,
       });
     expect(response4.statusCode).toBe(201);
   });

@@ -2,8 +2,8 @@ import mongoose, { Schema } from "mongoose";
 export interface PostAttributes {
   _id?: string;
   title: string;
-  author: mongoose.Types.ObjectId;
-  tags?: mongoose.Types.ObjectId[];
+  author: string;
+  tags: mongoose.Types.ObjectId[];
   averageRating: number;
   ratingCount: number;
   imageUrl?: string;
@@ -17,11 +17,12 @@ const postSchema = new mongoose.Schema<PostAttributes>(
       type: String,
       required: true,
     },
-    author: { type: Schema.Types.ObjectId, ref: "Users", required: true },
+    author: { type: String, required: true },
     tags: [
       {
         type: Schema.Types.ObjectId,
         ref: "Tags",
+        default: [],
       },
     ],
     imageUrl: {
