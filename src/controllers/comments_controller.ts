@@ -42,8 +42,6 @@ class CommentsController extends BaseController<CommentAttributes> {
           },
         ]);
 
-        console.log(result);
-
         await PostModel.findByIdAndUpdate(req.body.postId, {
           averageRating: result[0]?.averageRating.toFixed(2) ?? null,
           ratingCount: result[0]?.ratingCount ?? null,
