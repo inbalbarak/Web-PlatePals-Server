@@ -42,12 +42,19 @@ class CommentsController extends BaseController<CommentAttributes> {
           },
         ]);
 
-        await PostModel.findByIdAndUpdate(req.body.postId, {
-          averageRating: result[0]?.averageRating.toFixed(2) ?? null,
-          ratingCount: result[0]?.ratingCount ?? null,
-        });
+        const updatedPost = await PostModel.findByIdAndUpdate(
+          req.body.postId,
+          {
+            averageRating: result[0]?.averageRating.toFixed(2) ?? null,
+            ratingCount: result[0]?.ratingCount ?? null,
+          },
+          { new: true }
+        ).lean();
 
-        res.status(200).send(comment);
+        res.status(200).send({
+          comment,
+          updatedAverageRating: updatedPost.averageRating,
+        });
       });
     } catch (error) {
       res.status(500).send({ message: error.message });
