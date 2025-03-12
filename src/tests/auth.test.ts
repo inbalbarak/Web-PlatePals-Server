@@ -29,6 +29,7 @@ const testUser: User = {
   username: "test",
   email: "test@user.com",
   password: "testpassword",
+  savedPosts: [],
 };
 
 describe("Auth Tests", () => {

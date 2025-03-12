@@ -12,6 +12,7 @@ const testUser: User = {
   email: "test@user.com",
   password: "testpassword",
   username: "testuser",
+  savedPosts: [],
 };
 
 beforeAll(async () => {
