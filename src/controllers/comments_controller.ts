@@ -60,19 +60,6 @@ class CommentsController extends BaseController<CommentAttributes> {
       res.status(500).send({ message: error.message });
     }
   }
-
-  async getByPostIdUserId(req: Request, res: Response) {
-    try {
-      const comment = await CommentModel.findOne({
-        postId: req.params.postId,
-        author: req.params.userId,
-      });
-
-      res.status(200).send(comment);
-    } catch (error) {
-      res.status(500).send({ message: error.message });
-    }
-  }
 }
 
 export default new CommentsController();

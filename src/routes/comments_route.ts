@@ -31,36 +31,6 @@ router.get(
 
 /**
  * @swagger
- * /comments/:postId/user/:userId:
- *   get:
- *     summary: get comments on post of user
- *     tags: [Comments]
- *     parameters:
- *          - in: path
- *            name: postId
- *            schema:
- *              type: string
- *          - in: path
- *            name: userId
- *            schema:
- *              type: string
- *     responses:
- *       200:
- *         description: The user's comment on post
- *       400:
- *         description: Invalid request
- *       500:
- *         description: Server error
- */
-
-router.get(
-  "/post/:postId/user/:userId",
-  authMiddleware,
-  commentsController.getByPostIdUserId.bind(commentsController)
-);
-
-/**
- * @swagger
  * /comments/:
  *   post:
  *     summary: create a new comment
