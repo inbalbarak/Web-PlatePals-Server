@@ -128,7 +128,7 @@ describe("Auth Tests", () => {
         ingredients: "test",
         instructions: "test",
         title: "Test Post",
-        author: testUser.username,
+        author: testUser._id,
       });
     expect(response2.statusCode).toBe(201);
   });
@@ -188,7 +188,7 @@ describe("Auth Tests", () => {
         ingredients: "test",
         instructions: "test",
         title: "Test Post",
-        author: testUser.username,
+        author: testUser._id,
       });
     expect(response2.statusCode).not.toBe(201);
 
@@ -207,7 +207,7 @@ describe("Auth Tests", () => {
         ingredients: "test",
         instructions: "test",
         title: "Test Post",
-        author: testUser.username,
+        author: testUser._id,
       });
     expect(response4.statusCode).toBe(201);
   });

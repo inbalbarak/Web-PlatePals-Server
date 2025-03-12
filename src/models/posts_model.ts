@@ -82,7 +82,7 @@ export default PostModel;
  *              description: The post instructions
  *          example:
  *            title: 'title example'
- *            author: 'usernameexample'
+ *            author: '6783ef381c4c2468f4c...'
  *            tags: ['123','1234']
  *            rating: 4
  *            ingredients: 'post ingredients listing'

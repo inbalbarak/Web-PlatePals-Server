@@ -50,7 +50,7 @@ describe("Posts Tests", () => {
         ingredients: "Test Ingredients",
         instructions: "Test Instructions",
         title: "Test Post",
-        author: testUser.username,
+        author: testUser._id,
       });
     expect(response.statusCode).toBe(201);
     expect(response.body.title).toBe("Test Post");
@@ -78,7 +78,7 @@ describe("Posts Tests", () => {
         ingredients: "test",
         instructions: "test",
         title: "Test Post 2",
-        author: testUser.username,
+        author: testUser._id,
       });
     expect(response.statusCode).toBe(201);
   });

@@ -38,7 +38,7 @@ beforeAll(async () => {
       title: "Test Post",
       ingredients: "Test Ingredients",
       instructions: "Test Instructions",
-      author: testUser.username,
+      author: testUser._id,
     });
 
   expect(postResponse.statusCode).toBe(201);
