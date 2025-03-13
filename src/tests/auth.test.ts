@@ -82,7 +82,7 @@ describe("Auth Tests", () => {
     expect(response.body.userId).toBeDefined();
     testUser.accessToken = accessToken;
     testUser.refreshToken = refreshToken;
-    // testUser.userId = response.body.userId;
+    testUser._id = response.body.userId;
   });
 
   test("Check tokens are not the same", async () => {

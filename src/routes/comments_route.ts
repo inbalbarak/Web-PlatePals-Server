@@ -42,12 +42,19 @@ router.get(
  *           schema:
  *             $ref: '#/components/schemas/Comments'
  *     responses:
- *       200:
- *         description: The new comment
+ *       201:
+ *         description: Successfully created a new comment
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Comments'
+ *               type: object
+ *               properties:
+ *                 comment:
+ *                   $ref: '#/components/schemas/Comments'
+ *                 updatedAverageRating:
+ *                   type: number
+ *                   format: float
+ *                   description: The updated average rating of the post
  *       400:
  *         description: Invalid request body
  *       500:

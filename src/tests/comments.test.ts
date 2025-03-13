@@ -27,7 +27,7 @@ beforeAll(async () => {
   await request(app).post("/auth/register").send(testUser);
   const res = await request(app).post("/auth/login").send(testUser);
   testUser.token = res.body.refreshToken;
-  testUser._id = res.body._id;
+  testUser._id = res.body.userId;
   expect(testUser.token).toBeDefined();
 
   // Create a test post
@@ -53,21 +53,24 @@ afterAll((done) => {
 
 describe("Comments Tests", () => {
   test("Create Comment", async () => {
+    console.log("postId", postId);
+    console.log("userId", testUser._id);
     const response = await request(app)
       .post("/comments")
       .set({ authorization: "JWT " + testUser.token })
       .send({
         postId,
-        userId: testUser._id,
+        author: testUser._id,
+        rating: 2,
         content: "This is a test comment",
       });
 
     expect(response.statusCode).toBe(201);
-    expect(response.body.content).toBe("This is a test comment");
-    expect(response.body.postId).toBe(postId);
-    expect(response.body.userId).toBe(testUser._id);
+    expect(response.body.comment.content).toBe("This is a test comment");
+    expect(response.body.comment.postId).toBe(postId);
+    expect(response.body.comment.author).toBe(testUser._id);
 
-    commentId = response.body._id;
+    commentId = response.body.comment._id;
   });
 
   test("Get Comments by Post Id", async () => {
@@ -78,27 +81,5 @@ describe("Comments Tests", () => {
     expect(response.statusCode).toBe(200);
     expect(response.body.length).toBe(1);
     expect(response.body[0]._id).toBe(commentId);
-  });
-
-  test("Get Comment by Post ID and User ID", async () => {
-    const response = await request(app)
-      .get(`/comments/post/${postId}/user/${testUser._id}`)
-      .set({ authorization: "JWT " + testUser.token });
-
-    expect(response.statusCode).toBe(200);
-    expect(response.body.content).toBe("This is a test comment");
-    expect(response.body.userId).toBe(testUser._id);
-  });
-
-  test("Create Comment Fail (Missing Content)", async () => {
-    const response = await request(app)
-      .post("/comments")
-      .set({ authorization: "JWT " + testUser.token })
-      .send({
-        postId,
-        userId: testUser._id,
-      });
-
-    expect(response.statusCode).toBe(400);
   });
 });

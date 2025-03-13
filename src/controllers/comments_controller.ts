@@ -51,7 +51,7 @@ class CommentsController extends BaseController<CommentAttributes> {
           { new: true }
         ).lean();
 
-        res.status(200).send({
+        res.status(201).send({
           comment,
           updatedAverageRating: updatedPost.averageRating,
         });
