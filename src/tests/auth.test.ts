@@ -27,7 +27,7 @@ type User = UserAttributes & {
 
 const testUser: User = {
   username: "test",
-  email: "test@user.com",
+  email: "test2@user.com",
   password: "testpassword",
 };
 
@@ -79,10 +79,10 @@ describe("Auth Tests", () => {
     const refreshToken = response.body.refreshToken;
     expect(accessToken).toBeDefined();
     expect(refreshToken).toBeDefined();
-    expect(response.body._id).toBeDefined();
+    expect(response.body.userId).toBeDefined();
     testUser.accessToken = accessToken;
     testUser.refreshToken = refreshToken;
-    testUser._id = response.body._id;
+    // testUser.userId = response.body.userId;
   });
 
   test("Check tokens are not the same", async () => {
@@ -199,6 +199,7 @@ describe("Auth Tests", () => {
       });
     expect(response3.statusCode).toBe(200);
     testUser.accessToken = response3.body.accessToken;
+    testUser.refreshToken = response3.body.refreshToken;
 
     const response4 = await request(app)
       .post("/posts")
