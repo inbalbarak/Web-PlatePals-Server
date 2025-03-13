@@ -6,7 +6,8 @@ import express, { Express } from "express";
 import authRoutes from "./routes/auth_route";
 import postRoutes from "./routes/posts_route";
 import tagRoutes from "./routes/tags_route";
-import usersRoute from "./routes/user_route";
+import usersRoute from "./routes/users_route";
+import fileRouter from "./routes/files_route";
 
 import mongoose, { ConnectOptions } from "mongoose";
 
@@ -23,6 +24,11 @@ app.use("/auth", authRoutes);
 app.use("/posts", postRoutes);
 app.use("/tags", tagRoutes);
 app.use("/users", usersRoute);
+app.use("/files", fileRouter);
+
+app.use("/public", express.static("public"));
+app.use("/storage", express.static("storage"));
+app.use(express.static("front"));
 
 const initApp = () => {
   return new Promise<Express>((resolve, reject) => {
