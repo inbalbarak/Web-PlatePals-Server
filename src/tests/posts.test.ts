@@ -5,9 +5,9 @@ import postModel from "../models/posts_model";
 import { Express } from "express";
 import userModel, { UserAttributes } from "../models/users_model";
 
-var app: Express;
+let app: Express;
 
-type User = UserAttributes & { token?: string };
+type User = UserAttributes & { token?: string; userId?: string };
 const testUser: User = {
   email: "test@user.com",
   password: "testpassword",
@@ -22,7 +22,7 @@ beforeAll(async () => {
   await request(app).post("/auth/register").send(testUser);
   const res = await request(app).post("/auth/login").send(testUser);
   testUser.token = res.body.refreshToken;
-  testUser._id = res.body._id;
+  testUser.userId = res.body.userId;
   expect(testUser.token).toBeDefined();
 });
 
