@@ -19,6 +19,18 @@ class PostsController extends BaseController<PostAttributes> {
     }
   };
 
+  getByIds = async (req: Request, res: Response) => {
+    try {
+      const posts = await PostModel.find({
+        _id: { $in: req.body.ids },
+      }).lean();
+
+      res.status(200).json(posts);
+    } catch (err) {
+      res.status(500).json({ message: err });
+    }
+  };
+
   getByAuthor = async (req: Request, res: Response) => {
     try {
       const userPosts = await PostModel.find({
