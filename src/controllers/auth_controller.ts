@@ -186,7 +186,7 @@ const refresh = async (req: Request, res: Response) => {
     res.status(200).send({
       accessToken: tokens.accessToken,
       refreshToken: tokens.refreshToken,
-      _id: user._id,
+      userId: user._id,
     });
   } catch (_err) {
     res.status(400).send("fail");
@@ -207,7 +207,6 @@ export const googleLogin = async (req: Request, res: Response) => {
     });
 
     const payload = ticket.getPayload();
-    console.log(payload);
     req.body.email = payload.email;
 
     const email = payload?.email;
@@ -216,13 +215,17 @@ export const googleLogin = async (req: Request, res: Response) => {
     if (user == null) {
       user = await UsersModel.create({
         email: email,
-        imgUrl: payload?.picture,
+        imageUrl: payload?.picture,
         password: "google-signin",
       });
     }
 
     const tokens = generateToken(user._id);
-    res.status(200).send(tokens);
+    res.status(200).send({
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+      userId: user._id,
+    });
   } catch (_err) {
     res.status(400).send("error in google login");
   }

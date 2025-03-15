@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
-import usersController from "../controllers/users_controller";
 import { authMiddleware } from "../controllers/auth_controller";
+import usersController from "../controllers/users_controller";
 
 /**
  * @swagger
@@ -26,7 +26,7 @@ import { authMiddleware } from "../controllers/auth_controller";
  *                      application/json:
  *                          schema:
  *                              $ref: '#/components/schemas/Users'
- * /users/:id:
+ * /users/{id}:
  *      get:
  *          summary: get user by id
  *          tags: [Users]
@@ -44,10 +44,58 @@ import { authMiddleware } from "../controllers/auth_controller";
  *                      application/json:
  *                          schema:
  *                              $ref: '#/components/schemas/Users'
+ * /users/saved-posts/{id}:
+ *   put:
+ *     summary: Update Saved Posts
+ *     tags: [Users]
+ *     description: update user's saved posts
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 postId:
+ *                   type: string
+ *                   description: the post id
+ *                 toSave:
+ *                   type: boolean
+ *                   description: is post for save or unsave
+ *     responses:
+ *       200:
+ *         description: updates user's saved posts status
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   example:
+ *                     {
+ *                       "postId": "1234",
+ *                       "toSave": true
+ *                     }
+ *       400:
+ *         description: Invalid input data or request
+ *       500:
+ *         description: Internal server error
  */
 
 router.get("/:id", usersController.getById.bind(usersController));
 
 router.put("/", authMiddleware, usersController.update.bind(usersController));
+
+router.put(
+  "/saved-posts/:id",
+  authMiddleware,
+  usersController.updateSavedPosts.bind(usersController)
+);
 
 export default router;

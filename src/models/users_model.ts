@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 export interface UserAttributes {
   username?: string;
   email: string;
@@ -6,6 +6,7 @@ export interface UserAttributes {
   imageUrl?: string;
   _id?: string;
   refreshToken?: string[];
+  savedPosts: mongoose.Types.ObjectId[];
 }
 
 const userSchema = new mongoose.Schema<UserAttributes>({
@@ -28,27 +29,35 @@ const userSchema = new mongoose.Schema<UserAttributes>({
     type: [String],
     default: [],
   },
+  savedPosts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Posts",
+      default: [],
+    },
+  ],
 });
 
 const UserModel = mongoose.model<UserAttributes>("Users", userSchema);
 export default UserModel;
+
 /**
  * @swagger
  * components:
- *    schemas:
- *      Users:
- *         type: object
- *         required:
- *            - email
- *            - username
- *          properties:
- *            email:
- *              type: string
- *              description: The user email
- *            username:
- *              type: string
- *              description: The user username
- *          example:
- *            email: 'usernameexample'
- *            username: '123456'
+ *   schemas:
+ *     Users:
+ *       type: object
+ *       required:
+ *         - email
+ *         - username
+ *       properties:
+ *         email:
+ *           type: string
+ *           description: The user email
+ *         username:
+ *           type: string
+ *           description: The user username
+ *       example:
+ *         email: 'usernameexample'
+ *         username: '123456'
  */

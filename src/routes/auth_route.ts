@@ -30,14 +30,14 @@ import authController, { authMiddleware } from "../controllers/auth_controller";
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             $ref: '#/components/schemas/Users'
  *     responses:
  *       200:
  *         description: The new user
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/User'
+ *               $ref: '#/components/schemas/Users'
  */
 router.post("/register", authController.register);
 
@@ -54,7 +54,7 @@ router.post("/register", authController.register);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             $ref: '#/components/schemas/Users'
  *     responses:
  *       200:
  *         description: Successful login
