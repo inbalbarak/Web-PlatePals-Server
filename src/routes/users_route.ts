@@ -5,10 +5,10 @@ import usersController from "../controllers/users_controller";
 
 /**
  * @swagger
- * /comments/post/:id:
+ * /users/:id:
  *   get:
- *     summary: get comments by post id
- *     tags: [Comments]
+ *     summary: get user by id
+ *     tags: [Users]
  *     parameters:
  *          - in: path
  *            name: id
@@ -16,7 +16,7 @@ import usersController from "../controllers/users_controller";
  *              type: string
  *     responses:
  *       200:
- *         description: The post's comments
+ *         description: The user by id
  *       400:
  *         description: Invalid request
  *       500:

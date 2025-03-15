@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import CommentModel, { CommentAttributes } from "../models/comments_model";
 import PostModel from "../models/posts_model";
 import mongoose from "mongoose";
+import { create } from "domain";
 
 class CommentsController extends BaseController<CommentAttributes> {
   constructor() {
@@ -12,6 +13,7 @@ class CommentsController extends BaseController<CommentAttributes> {
   async getByPostId(req: Request, res: Response) {
     try {
       const comments = await CommentModel.find({ postId: req.params.id })
+        .sort({ createdAt: -1 })
         .populate("author")
         .lean();
       res.status(200).send(comments);
@@ -26,7 +28,7 @@ class CommentsController extends BaseController<CommentAttributes> {
     try {
       await comment.save(req.body).then(async (comment) => {
         const postId: string = req.body.postId;
-        const result = await CommentModel.aggregate([
+        const postRatingSummary = await CommentModel.aggregate([
           {
             $match: {
               postId: new mongoose.Types.ObjectId(postId),
@@ -45,8 +47,9 @@ class CommentsController extends BaseController<CommentAttributes> {
         const updatedPost = await PostModel.findByIdAndUpdate(
           req.body.postId,
           {
-            averageRating: result[0]?.averageRating.toFixed(2) ?? null,
-            ratingCount: result[0]?.ratingCount ?? null,
+            averageRating:
+              postRatingSummary[0]?.averageRating.toFixed(2) ?? null,
+            ratingCount: postRatingSummary[0]?.ratingCount ?? null,
           },
           { new: true }
         ).lean();

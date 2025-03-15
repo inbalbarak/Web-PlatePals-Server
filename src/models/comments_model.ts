@@ -4,7 +4,7 @@ export interface CommentAttributes {
   content: string;
   author: mongoose.Types.ObjectId;
   postId: mongoose.Types.ObjectId;
-  rating: number;
+  rating?: number;
 }
 
 const commentSchema = new mongoose.Schema<CommentAttributes>(
@@ -22,33 +22,34 @@ const CommentModel = mongoose.model<CommentAttributes>(
   commentSchema
 );
 export default CommentModel;
+
 /**
  * @swagger
  * components:
- *    schemas:
- *      Comments:
- *         type: object
- *         required:
- *            - content
- *            - author
- *            - postId
- *            - rating
- *          properties:
- *            author:
- *              type: string
- *              description: The author id
- *            content:
- *              type: string
- *              description: The comment content
- *            rating:
- *              type: number
- *              description: The chosen rating
- *            postId:
- *              type: string
- *              description: The post id
- *          example:
- *            author: '6783ef381c4c2468f4c...'
- *            rating: 4
- *            content: 'loved this recipe'
- *            postId: '6783ef381c4c2468f4c...'
+ *   schemas:
+ *     Comments:
+ *       type: object
+ *       required:
+ *         - content
+ *         - author
+ *         - postId
+ *         - rating
+ *       properties:
+ *         author:
+ *           type: string
+ *           description: The author id
+ *         content:
+ *           type: string
+ *           description: The comment content
+ *         rating:
+ *           type: number
+ *           description: The chosen rating
+ *         postId:
+ *           type: string
+ *           description: The post id
+ *       example:
+ *         author: '6783ef381c4c2468f4c...'
+ *         rating: 4
+ *         content: 'loved this recipe'
+ *         postId: '6783ef381c4c2468f4c...'
  */
