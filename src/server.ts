@@ -8,6 +8,7 @@ import postRoutes from "./routes/posts_route";
 import userRoutes from "./routes/users_route";
 import commentRoutes from "./routes/comments_route";
 import tagRoutes from "./routes/tags_route";
+import fileRoutes from "./routes/files_route";
 import chatbotRoutes from "./routes/chatbot_route";
 import usersRoutes from "./routes/users_route";
 import mongoose, { ConnectOptions } from "mongoose";
@@ -28,8 +29,13 @@ app.use("/users", userRoutes);
 app.use("/comments", commentRoutes);
 app.use("/posts", postRoutes);
 app.use("/tags", tagRoutes);
+app.use("/files", fileRoutes);
 app.use("/chatbot", chatbotRoutes);
 app.use("/users", usersRoutes);
+
+app.use("/public", express.static("public"));
+app.use("/storage", express.static("storage"));
+app.use(express.static("front"));
 
 if (process.env.NODE_ENV == "development") {
   const options = {

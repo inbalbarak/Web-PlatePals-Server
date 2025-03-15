@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema<UserAttributes>({
     type: String,
     required: true,
   },
+  imageUrl: {
+    type: String,
+  },
   refreshToken: {
     type: [String],
     default: [],
