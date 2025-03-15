@@ -7,7 +7,7 @@ import userModel, { UserAttributes } from "../models/users_model";
 
 let app: Express;
 
-type User = UserAttributes & { token?: string; userId?: string };
+type User = UserAttributes & { token?: string };
 const testUser: User = {
   email: "test@user.com",
   password: "testpassword",
@@ -23,7 +23,7 @@ beforeAll(async () => {
   await request(app).post("/auth/register").send(testUser);
   const res = await request(app).post("/auth/login").send(testUser);
   testUser.token = res.body.refreshToken;
-  testUser.userId = res.body.userId;
+  testUser._id = res.body.userId;
   expect(testUser.token).toBeDefined();
 });
 
@@ -51,7 +51,7 @@ describe("Posts Tests", () => {
         ingredients: "Test Ingredients",
         instructions: "Test Instructions",
         title: "Test Post",
-        author: testUser.username,
+        author: testUser._id,
       });
     expect(response.statusCode).toBe(201);
     expect(response.body.title).toBe("Test Post");
@@ -79,7 +79,7 @@ describe("Posts Tests", () => {
         ingredients: "test",
         instructions: "test",
         title: "Test Post 2",
-        author: testUser.username,
+        author: testUser._id,
       });
     expect(response.statusCode).toBe(201);
   });

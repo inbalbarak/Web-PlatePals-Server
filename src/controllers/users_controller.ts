@@ -7,7 +7,7 @@ class UsersController extends BaseController<UserAttributes> {
     super(UserModel);
   }
 
-  async updateSavedPosts(req: Request, res: Response) {
+  updateSavedPosts = async (req: Request, res: Response) => {
     try {
       const { toSave, postId } = req.body;
       const action = toSave ? "$push" : "$pull";
@@ -20,7 +20,7 @@ class UsersController extends BaseController<UserAttributes> {
     } catch (err) {
       res.status(500).json({ message: err });
     }
-  }
+  };
 }
 
 export default new UsersController();

@@ -7,18 +7,6 @@ class PostsController extends BaseController<PostAttributes> {
     super(PostModel);
   }
 
-  getAll = async (req: Request, res: Response) => {
-    try {
-      const posts = await PostModel.find()
-        .populate([{ path: "tags", select: "name" }])
-        .lean();
-
-      res.status(200).send(posts);
-    } catch (error) {
-      res.status(500).send({ message: error.message });
-    }
-  };
-
   getByIds = async (req: Request, res: Response) => {
     try {
       const posts = await PostModel.find({
@@ -28,6 +16,21 @@ class PostsController extends BaseController<PostAttributes> {
       res.status(200).json(posts);
     } catch (err) {
       res.status(500).json({ message: err });
+    }
+  };
+
+  getAll = async (req: Request, res: Response) => {
+    try {
+      const posts = await PostModel.find()
+        .populate([
+          { path: "tags", select: "name" },
+          { path: "author", select: "username" },
+        ])
+        .lean();
+
+      res.status(200).send(posts);
+    } catch (error) {
+      res.status(500).send({ message: error.message });
     }
   };
 

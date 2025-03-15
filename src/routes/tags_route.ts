@@ -8,29 +8,23 @@ import tagsController from "../controllers/tags_controller";
  * tags:
  *    name: Tags
  *    description: The Tags API
- * components:
- *    schemas:
- *          Comments:
- *              type: object
- *              required:
- *                       - name
- *              properties:
- *                  name:
- *                      type: string
- *                      description: The tag name
- *              example:
- *                  name: 'tag name'
+ */
+
+/**
+ * @swagger
  * /tags/:
  *      get:
- *          summary: get all tags
+ *          summary: Get all tags
  *          tags: [Tags]
  *          responses:
  *              200:
- *                  description: The tags
+ *                  description: all tags
  *                  content:
  *                      application/json:
  *                          schema:
- *                              $ref: '#/components/schemas/Tags'
+ *                              type: array
+ *                              items:
+ *                                  $ref: '#/components/schemas/Tags'
  */
 
 router.get("/", authMiddleware, tagsController.getAll.bind(tagsController));

@@ -6,7 +6,7 @@ import { Express } from "express";
 
 let app: Express;
 
-type User = UserAttributes & { token?: string; userId?: string };
+type User = UserAttributes & { token?: string };
 const testUser: User = {
   username: "inbal3",
   email: "test3@user.com",
@@ -21,8 +21,8 @@ beforeAll(async () => {
   await UserModel.deleteMany();
   await request(app).post("/auth/register").send(testUser);
   const res = await request(app).post("/auth/login").send(testUser);
-  testUser.token = res.body.accessToken;
-  testUser.userId = res.body.userId;
+  testUser.token = res.body.refreshToken;
+  testUser._id = res.body.userId;
 });
 
 afterAll((done) => {
@@ -33,7 +33,9 @@ afterAll((done) => {
 
 describe("Users tests", () => {
   test("Test get user by id", async () => {
-    const response = await request(app).get("/users/" + testUser.userId);
+    const response = await request(app)
+      .get("/users/" + testUser._id)
+      .set({ authorization: "JWT " + testUser.token });
     expect(response.statusCode).toBe(200);
     expect(response.body.username).toBe(testUser.username);
     expect(response.body.email).toBe(testUser.email);
@@ -44,7 +46,7 @@ describe("Users tests", () => {
       .put("/users/")
       .set({ authorization: "JWT " + testUser.token })
       .send({
-        _id: testUser.userId,
+        _id: testUser._id,
         username: testUser.username + "changed",
       });
 
@@ -52,7 +54,9 @@ describe("Users tests", () => {
   });
 
   test("Test get user by id after change", async () => {
-    const response = await request(app).get("/users/" + testUser.userId);
+    const response = await request(app)
+      .get("/users/" + testUser._id)
+      .set({ authorization: "JWT " + testUser.token });
     expect(response.statusCode).toBe(200);
     expect(response.body.username).toBe(testUser.username + "changed");
     expect(response.body.email).toBe(testUser.email);
