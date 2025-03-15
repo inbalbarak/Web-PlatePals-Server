@@ -26,7 +26,7 @@ import usersController from "../controllers/users_controller";
  *                      application/json:
  *                          schema:
  *                              $ref: '#/components/schemas/Users'
- * /users/:id:
+ * /users/{id}:
  *      get:
  *          summary: get user by id
  *          tags: [Users]
@@ -44,7 +44,7 @@ import usersController from "../controllers/users_controller";
  *                      application/json:
  *                          schema:
  *                              $ref: '#/components/schemas/Users'
- * /users/:id/saved-posts:
+ * /users/saved-posts/{id}:
  *   put:
  *     summary: Update Saved Posts
  *     tags: [Users]
@@ -93,7 +93,7 @@ router.get("/:id", usersController.getById.bind(usersController));
 router.put("/", authMiddleware, usersController.update.bind(usersController));
 
 router.put(
-  "/:id/saved-posts",
+  "/saved-posts/:id",
   authMiddleware,
   usersController.updateSavedPosts.bind(usersController)
 );

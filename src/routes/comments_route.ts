@@ -5,7 +5,7 @@ import commentsController from "../controllers/comments_controller";
 
 /**
  * @swagger
- * /comments/post/:id:
+ * /comments/post/{id}:
  *   get:
  *     summary: get comments by post id
  *     tags: [Comments]
