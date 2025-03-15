@@ -9,7 +9,7 @@ import userRoutes from "./routes/users_route";
 import commentRoutes from "./routes/comments_route";
 import tagRoutes from "./routes/tags_route";
 import chatbotRoutes from "./routes/chatbot_route";
-import usersRoute from "./routes/user_route";
+import usersRoutes from "./routes/users_route";
 import mongoose, { ConnectOptions } from "mongoose";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
@@ -29,7 +29,7 @@ app.use("/comments", commentRoutes);
 app.use("/posts", postRoutes);
 app.use("/tags", tagRoutes);
 app.use("/chatbot", chatbotRoutes);
-app.use("/users", usersRoute);
+app.use("/users", usersRoutes);
 
 if (process.env.NODE_ENV == "development") {
   const options = {

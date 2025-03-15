@@ -11,7 +11,10 @@ const testUser: User = {
   username: "inbal3",
   email: "test3@user.com",
   password: "testpassword",
+  savedPosts: [],
 };
+
+let postId = "";
 
 beforeAll(async () => {
   app = await initApp();
@@ -20,6 +23,21 @@ beforeAll(async () => {
   const res = await request(app).post("/auth/login").send(testUser);
   testUser.token = res.body.refreshToken;
   testUser._id = res.body.userId;
+  expect(testUser.token).toBeDefined();
+
+  // Create a test post
+  const postResponse = await request(app)
+    .post("/posts")
+    .set({ authorization: "JWT " + testUser.token })
+    .send({
+      title: "Test Post",
+      ingredients: "Test Ingredients",
+      instructions: "Test Instructions",
+      author: testUser._id,
+    });
+
+  expect(postResponse.statusCode).toBe(201);
+  postId = postResponse.body._id;
 });
 
 afterAll((done) => {
@@ -57,5 +75,30 @@ describe("Users tests", () => {
     expect(response.statusCode).toBe(200);
     expect(response.body.username).toBe(testUser.username + "changed");
     expect(response.body.email).toBe(testUser.email);
+  });
+
+  test("Test update saved posts - save post", async () => {
+    const response = await request(app)
+      .put(`/users/${testUser._id}/saved-posts`)
+      .set({ authorization: "JWT " + testUser.token })
+      .send({ toSave: true, postId });
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.savedPosts).toContain(postId);
+  });
+
+  test("Test update saved posts - unsave post", async () => {
+    await request(app)
+      .put(`/users/${testUser._id}/saved-posts`)
+      .set({ authorization: "JWT " + testUser.token })
+      .send({ toSave: true, postId });
+
+    const response = await request(app)
+      .put(`/users/${testUser._id}/saved-posts`)
+      .set({ authorization: "JWT " + testUser.token })
+      .send({ toSave: false, postId });
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.savedPosts).not.toContain(postId);
   });
 });

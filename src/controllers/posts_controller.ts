@@ -7,7 +7,19 @@ class PostsController extends BaseController<PostAttributes> {
     super(PostModel);
   }
 
-  async getAll(req: Request, res: Response) {
+  getByIds = async (req: Request, res: Response) => {
+    try {
+      const posts = await PostModel.find({
+        _id: { $in: req.body.ids },
+      }).lean();
+
+      res.status(200).json(posts);
+    } catch (err) {
+      res.status(500).json({ message: err });
+    }
+  };
+
+  getAll = async (req: Request, res: Response) => {
     try {
       const posts = await PostModel.find()
         .populate([
@@ -20,7 +32,7 @@ class PostsController extends BaseController<PostAttributes> {
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
-  }
+  };
 
   getByAuthor = async (req: Request, res: Response) => {
     try {

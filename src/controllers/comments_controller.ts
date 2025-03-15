@@ -3,14 +3,13 @@ import { Request, Response } from "express";
 import CommentModel, { CommentAttributes } from "../models/comments_model";
 import PostModel from "../models/posts_model";
 import mongoose from "mongoose";
-import { create } from "domain";
 
 class CommentsController extends BaseController<CommentAttributes> {
   constructor() {
     super(CommentModel);
   }
 
-  async getByPostId(req: Request, res: Response) {
+  getByPostId = async (req: Request, res: Response) => {
     try {
       const comments = await CommentModel.find({ postId: req.params.id })
         .sort({ createdAt: -1 })
@@ -20,9 +19,9 @@ class CommentsController extends BaseController<CommentAttributes> {
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
-  }
+  };
 
-  async create(req: Request, res: Response) {
+  create = async (req: Request, res: Response) => {
     const comment = new CommentModel(req.body);
 
     try {
@@ -62,7 +61,7 @@ class CommentsController extends BaseController<CommentAttributes> {
     } catch (error) {
       res.status(500).send({ message: error.message });
     }
-  }
+  };
 }
 
 export default new CommentsController();

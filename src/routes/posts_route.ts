@@ -71,6 +71,51 @@ import postsController from "../controllers/posts_controller";
  *         description: Invalid request body
  *       500:
  *         description: Server error
+ * /posts/ids:
+ *   post:
+ *     summary: get posts by by ids
+ *     tags: [Posts]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               ids:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: post ids
+ *     responses:
+ *       200:
+ *         description: posts by ids
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Posts'
+ *       400:
+ *         description: Invalid request body
+ *       500:
+ *         description: Server error
+ */
+
+router.get("/", authMiddleware, postsController.getAll.bind(postsController));
+
+router.post(
+  "/ids",
+  authMiddleware,
+  postsController.getByIds.bind(postsController)
+);
+
+router.put("/", authMiddleware, postsController.update.bind(postsController));
+
+router.post("/", authMiddleware, postsController.create.bind(postsController));
+
+/**
+ * @swagger
  * /posts/{id}:
  *   delete:
  *     summary: Delete post by ID
