@@ -16,15 +16,15 @@ export default TagModel;
 /**
  * @swagger
  * components:
- *    schemas:
- *      Posts:
- *         type: object
- *         required:
- *            - name
- *          properties:
- *            name:
- *              type: string
- *              description: The tag name
- *          example:
- *            name: 'lunch'
+ *   schemas:
+ *     Tags:
+ *       type: object
+ *       required:
+ *         - name
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: The tag name
+ *       example:
+ *         name: 'lunch'
  */

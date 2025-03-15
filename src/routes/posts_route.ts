@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import { authMiddleware } from "../controllers/auth_controller";
-import { getByAuthor, postsController } from "../controllers/posts_controller";
+import postsController from "../controllers/posts_controller";
 
 /**
  * @swagger
@@ -12,9 +12,26 @@ import { getByAuthor, postsController } from "../controllers/posts_controller";
 
 /**
  * @swagger
- * /post/
+ * /posts/:
+ *   get:
+ *     summary: Get all posts
+ *     tags: [Posts]
+ *     responses:
+ *       200:
+ *         description: All posts
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Posts'
+ *       400:
+ *         description: Invalid request body
+ *       500:
+ *         description: Server error
+ *
  *   post:
- *     summary: create a new post
+ *     summary: Create a new post
  *     tags: [Posts]
  *     requestBody:
  *       required: true
@@ -23,18 +40,19 @@ import { getByAuthor, postsController } from "../controllers/posts_controller";
  *           schema:
  *             $ref: '#/components/schemas/Posts'
  *     responses:
- *       200:
+ *       201:
  *         description: The new post
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Post'
+ *               $ref: '#/components/schemas/Posts'
  *       400:
  *         description: Invalid request body
  *       500:
  *         description: Server error
+ *
  *   put:
- *     summary: update a post
+ *     summary: Update a post
  *     tags: [Posts]
  *     requestBody:
  *       required: true
@@ -48,29 +66,21 @@ import { getByAuthor, postsController } from "../controllers/posts_controller";
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Post'
+ *               $ref: '#/components/schemas/Posts'
  *       400:
  *         description: Invalid request body
  *       500:
  *         description: Server error
- */
-router.get("/", authMiddleware, postsController.getAll.bind(postsController));
-
-router.put("/", authMiddleware, postsController.update.bind(postsController));
-
-router.post("/", authMiddleware, postsController.create.bind(postsController));
-
-/**
- * @swagger
- * /post/:id
+ * /posts/{id}:
  *   delete:
- *     summary: delete post by id
- *     tags: [Comments]
+ *     summary: Delete post by ID
+ *     tags: [Posts]
  *     parameters:
- *          - in: path
- *            name: id
- *            schema:
- *              type: string
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: The deleted post
@@ -78,26 +88,34 @@ router.post("/", authMiddleware, postsController.create.bind(postsController));
  *         description: Invalid request
  *       500:
  *         description: Server error
- *
- * /posts/author/:id:
- *      get:
- *          summary: get posts by author
- *          tags: [Posts]
- *          parameters:
- *              - in: path
- *                name: id
- *                schema:
- *                  type: string
- *          security:
- *              - bearerAuth: []
- *          responses:
- *              200:
- *                  description: The posts written by the author
- *                  content:
- *                      application/json:
- *                          schema:
- *                              $ref: '#/components/schemas/Posts'
+ * /posts/author/{id}:
+ *   get:
+ *     summary: Get posts by author
+ *     tags: [Posts]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: The posts written by the author
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                   $ref: '#/components/schemas/Posts'
  */
+
+router.get("/", authMiddleware, postsController.getAll.bind(postsController));
+
+router.put("/", authMiddleware, postsController.update.bind(postsController));
+
+router.post("/", authMiddleware, postsController.create.bind(postsController));
 
 router.delete(
   "/:id",
@@ -105,6 +123,10 @@ router.delete(
   postsController.delete.bind(postsController)
 );
 
-router.get("/user/", authMiddleware, getByAuthor.bind(postsController));
+router.get(
+  "/user/",
+  authMiddleware,
+  postsController.getByAuthor.bind(postsController)
+);
 
 export default router;

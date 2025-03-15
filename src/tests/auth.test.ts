@@ -82,7 +82,7 @@ describe("Auth Tests", () => {
     expect(response.body.userId).toBeDefined();
     testUser.accessToken = accessToken;
     testUser.refreshToken = refreshToken;
-    // testUser.userId = response.body.userId;
+    testUser._id = response.body.userId;
   });
 
   test("Check tokens are not the same", async () => {
@@ -128,7 +128,7 @@ describe("Auth Tests", () => {
         ingredients: "test",
         instructions: "test",
         title: "Test Post",
-        author: testUser.username,
+        author: testUser._id,
       });
     expect(response2.statusCode).toBe(201);
   });
@@ -188,7 +188,7 @@ describe("Auth Tests", () => {
         ingredients: "test",
         instructions: "test",
         title: "Test Post",
-        author: testUser.username,
+        author: testUser._id,
       });
     expect(response2.statusCode).not.toBe(201);
 
@@ -208,7 +208,7 @@ describe("Auth Tests", () => {
         ingredients: "test",
         instructions: "test",
         title: "Test Post",
-        author: testUser.username,
+        author: testUser._id,
       });
     expect(response4.statusCode).toBe(201);
   });
