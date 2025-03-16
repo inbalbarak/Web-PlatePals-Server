@@ -37,22 +37,23 @@ app.use("/public", express.static("public"));
 app.use("/storage", express.static("storage"));
 app.use(express.static("front"));
 
-if (process.env.NODE_ENV == "development") {
-  const options = {
-    definition: {
-      openapi: "3.0.0",
-      info: {
-        title: "Web Dev 2022 REST API",
-        version: "1.0.0",
-        description: "REST server including authentication using JWT",
-      },
-      servers: [{ url: `http://localhost:${process.env.PORT}` }],
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Web Dev 2022 REST API",
+      version: "1.0.0",
+      description: "REST server including authentication using JWT",
     },
-    apis: ["./src/routes/*.ts", "./src/models/*.ts"],
-  };
-  const specs = swaggerJsDoc(options);
-  app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
-}
+    servers: [
+    { url: `http://localhost:${process.env.PORT}` }, 
+    { url: "https://10.10.246.37" }
+    ],
+  },
+  apis: ["./src/routes/*.ts", "./src/models/*.ts"],
+};
+const specs = swaggerJsDoc(options);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 const initApp = () => {
   return new Promise<Express>((resolve, reject) => {
