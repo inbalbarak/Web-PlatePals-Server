@@ -217,6 +217,7 @@ export const googleLogin = async (req: Request, res: Response) => {
         email: email,
         imageUrl: payload?.picture,
         password: "google-signin",
+        username: "User" + Math.floor(Math.random() * 90000) + 10000,
       });
     }
 

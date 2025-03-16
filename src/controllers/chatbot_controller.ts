@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Request, Response } from "express";
 
 const chatbotController = {
@@ -5,24 +6,21 @@ const chatbotController = {
     const messages = req.body;
 
     try {
-      const response = await fetch(process.env.CHATGPT_API_URL, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.CHATGPT_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const { data } = await axios.post(
+        process.env.CHATGPT_API_URL!,
+        {
           model: "gpt-4o-mini",
           messages: messages,
           max_tokens: 300,
-        }),
-      });
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.CHATGPT_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) {
-        throw new Error(`ChatGPT error: ${response.statusText}`);
-      }
-
-      const data = await response.json();
       const message = data?.choices?.[0]?.message;
 
       res.status(200).json({ message });
