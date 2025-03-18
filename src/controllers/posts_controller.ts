@@ -11,7 +11,9 @@ class PostsController extends BaseController<PostAttributes> {
     try {
       const posts = await PostModel.find({
         _id: { $in: req.body.ids },
-      }).lean();
+      })
+        .populate({ path: "commentCount" })
+        .lean();
 
       res.status(200).json(posts);
     } catch (err) {
@@ -25,6 +27,7 @@ class PostsController extends BaseController<PostAttributes> {
         .populate([
           { path: "tags", select: "name" },
           { path: "author", select: "username" },
+          { path: "commentCount" },
         ])
         .lean();
 
@@ -38,7 +41,9 @@ class PostsController extends BaseController<PostAttributes> {
     try {
       const userPosts = await PostModel.find({
         author: req.params.userId,
-      }).lean();
+      })
+        .populate({ path: "commentCount" })
+        .lean();
       res.status(200).json(userPosts);
     } catch (err) {
       res.status(500).json({ message: err });

@@ -71,17 +71,9 @@ import usersController from "../controllers/users_controller";
  *       200:
  *         description: updates user's saved posts status
  *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: object
- *                   example:
- *                     {
- *                       "postId": "1234",
- *                       "toSave": true
- *                     }
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Users'
  *       400:
  *         description: Invalid input data or request
  *       500:
