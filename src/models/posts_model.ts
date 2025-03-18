@@ -85,15 +85,24 @@ export default PostModel;
  *           items:
  *             type: string
  *           description: The post tag IDs
- *         rating:
- *           type: number
- *           description: The post rating
+ *         imageUrl:
+ *           type: string
+ *           description: The post image url
  *         ingredients:
  *           type: string
  *           description: The post ingredients
  *         instructions:
  *           type: string
  *           description: The post instructions
+ *         averageRating:
+ *           type: number
+ *           description: The post average rating
+ *         ratingCount:
+ *           type: number
+ *           description: The post rating count
+ *         commentCount:
+ *           type: number
+ *           description: The post comment count
  *       example:
  *         title: "title example"
  *         author: "6783ef381c4c2468f4c..."
@@ -101,4 +110,7 @@ export default PostModel;
  *         rating: 4
  *         ingredients: "post ingredients listing"
  *         instructions: "post instructions"
+ *         averageRating: 5
+ *         ratingCount: 1
+ *         commentCount: 1
  */

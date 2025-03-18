@@ -50,6 +50,7 @@ export default UserModel;
  *       required:
  *         - email
  *         - username
+ *         - password
  *       properties:
  *         email:
  *           type: string
@@ -57,7 +58,25 @@ export default UserModel;
  *         username:
  *           type: string
  *           description: The user username
+ *         password:
+ *            type: string
+ *            description: The user password
+ *         imageUrl:
+ *            type: string
+ *            description: The user image url
+ *         refreshToken:
+ *            type: array
+ *            description: The refresh token
+ *         savedPosts:
+ *            type: array
+ *            description: The user saved post references
  *       example:
  *         email: 'usernameexample'
  *         username: '123456'
+ *         password: '123'
+ *         imageUrl: '<Image url>'
+ *         refreshToken: ['Udkgf73k']
+ *         savedPosts: ['1','2']
+ *
+ *
  */
