@@ -17,6 +17,12 @@ import commentsController from "../controllers/comments_controller";
  *     responses:
  *       200:
  *         description: The post's comments
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Comments'
  *       400:
  *         description: Invalid request
  *       500:
@@ -59,33 +65,7 @@ router.get(
  *         description: Invalid request body
  *       500:
  *         description: Server error
- *   put:
- *     summary: update a comment
- *     tags: [Comments]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Comments'
- *     responses:
- *       200:
- *         description: The updated comment
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Comments'
- *       400:
- *         description: Invalid request body
- *       500:
- *         description: Server error
  */
-
-router.put(
-  "/",
-  authMiddleware,
-  commentsController.update.bind(commentsController)
-);
 
 router.post(
   "/",

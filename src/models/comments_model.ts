@@ -33,7 +33,6 @@ export default CommentModel;
  *         - content
  *         - author
  *         - postId
- *         - rating
  *       properties:
  *         author:
  *           type: string
