@@ -3,6 +3,7 @@ import UserModel, { UserAttributes } from "../models/users_model";
 import initApp from "../server";
 import request from "supertest";
 import { Express } from "express";
+import PostModel from "../models/posts_model";
 
 let app: Express;
 
@@ -42,8 +43,12 @@ beforeAll(async () => {
 
 afterAll((done) => {
   console.log("afterAll");
-  mongoose.connection.close();
-  done();
+  Promise.all([PostModel.deleteMany(), UserModel.deleteMany()])
+    .then(() => {
+      mongoose.connection.close();
+      done();
+    })
+    .catch(done);
 });
 
 describe("Users tests", () => {
