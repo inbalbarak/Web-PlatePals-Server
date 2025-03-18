@@ -18,8 +18,7 @@ const testUser: User = {
 beforeAll(async () => {
   console.log("beforeAll");
   app = await initApp();
-  await postModel.deleteMany();
-  await userModel.deleteMany();
+  await Promise.all([postModel.deleteMany(), userModel.deleteMany()]);
   await request(app).post("/auth/register").send(testUser);
   const res = await request(app).post("/auth/login").send(testUser);
   testUser.token = res.body.refreshToken;
@@ -29,8 +28,12 @@ beforeAll(async () => {
 
 afterAll((done) => {
   console.log("afterAll");
-  mongoose.connection.close();
-  done();
+  Promise.all([postModel.deleteMany(), userModel.deleteMany()])
+    .then(() => {
+      mongoose.connection.close();
+      done();
+    })
+    .catch(done);
 });
 
 let postId = "";
