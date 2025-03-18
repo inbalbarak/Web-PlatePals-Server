@@ -14,6 +14,7 @@ import usersRoutes from "./routes/users_route";
 import mongoose, { ConnectOptions } from "mongoose";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+import path from "path";
 
 const app = express();
 app.use(bodyParser.json());
@@ -36,6 +37,10 @@ app.use("/users", usersRoutes);
 app.use("/public", express.static("public"));
 app.use("/storage", express.static("storage"));
 app.use(express.static("front"));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../front/index.html")); 
+});
 
 const options = {
   definition: {
