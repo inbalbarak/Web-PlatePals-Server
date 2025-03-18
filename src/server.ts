@@ -38,10 +38,6 @@ app.use("/public", express.static("public"));
 app.use("/storage", express.static("storage"));
 app.use(express.static("front"));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../../front/index.html")); 
-});
-
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -52,13 +48,18 @@ const options = {
     },
     servers: [
     { url: `http://localhost:${process.env.PORT}` }, 
-    { url: "https://10.10.246.37" }
+    { url: "https://10.10.246.37" },
+    { url: "https://node37.cs.colman.ac.il" }
     ],
   },
   apis: ["./src/routes/*.ts", "./src/models/*.ts"],
 };
 const specs = swaggerJsDoc(options);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../../front/index.html")); 
+});
 
 const initApp = () => {
   return new Promise<Express>((resolve, reject) => {
