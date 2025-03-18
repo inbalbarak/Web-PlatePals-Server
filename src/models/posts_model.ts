@@ -9,6 +9,7 @@ export interface PostAttributes {
   imageUrl?: string;
   ingredients: string;
   instructions: string;
+  commentCount: number;
 }
 
 const postSchema = new mongoose.Schema<PostAttributes>(
@@ -48,8 +49,19 @@ const postSchema = new mongoose.Schema<PostAttributes>(
   { timestamps: true }
 );
 
+postSchema.virtual("commentCount", {
+  ref: "Comments",
+  localField: "_id",
+  foreignField: "postId",
+  count: true,
+});
+
+postSchema.set("toJSON", { virtuals: true });
+postSchema.set("toObject", { virtuals: true });
+
 const PostModel = mongoose.model<PostAttributes>("Posts", postSchema);
 export default PostModel;
+
 /**
  * @swagger
  * components:
